@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BuyerSeller.Models.Service>
+
+@{
+    ViewData["Title"] = "Index";
+}
+ 
+<h4 class="text-center text-uppercase">List of Services</h4>
+
+<p>
+    <a asp-action="CreateService" class="btn btn-sm btn-primary rounded-0 text-uppercase"><i class="fas fa-plus-circle"></i> Add New</a>
+</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Picture)</th>
+            <th>@Html.DisplayNameFor(model => model.Title)</th>
+            <th>@Html.DisplayNameFor(model => model.Description)</th>
+            <th>@Html.DisplayNameFor(model => model.tags)</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+               <td><img src="~/Pictures/@employee.Picture"
+     class="rounded-circle"
+     height="50" width="50"
+     asp-append-version="true" /></td>
+                <td>
+                    
+                    @employee.Title
+                </td>
+                <td>@employee.Description</td>
+                <td>@employee.tags</td> 
+            </tr>
+
+        }
+    </tbody>
+</table>   
