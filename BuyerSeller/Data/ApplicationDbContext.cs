@@ -13,5 +13,6 @@ namespace BuyerSeller.Data
             : base(options)
         {
         }
+        public DbSet<Service> Services { get; set; }
     }
 }
