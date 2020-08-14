@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 
 namespace BuyerSeller.Areas.Identity.Pages.Account
@@ -31,10 +32,16 @@ namespace BuyerSeller.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            Roles = new List<SelectListItem>
+        {
+            new SelectListItem {Value = "Seller", Text ="Seller"},
+            new SelectListItem {Value = "Buyer", Text = "Buyer"},
+        };
         }
-
+      
         [BindProperty]
         public InputModel Input { get; set; }
+        public List<SelectListItem> Roles { get; }
 
         public string ReturnUrl { get; set; }
 
@@ -61,6 +68,10 @@ namespace BuyerSeller.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name = "UserRole")]
+            public string UserRole { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -77,6 +88,8 @@ namespace BuyerSeller.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                      await _userManager.AddToRoleAsync(user, Input.UserRole);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
