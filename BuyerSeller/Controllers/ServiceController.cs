@@ -9,9 +9,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using BuyerSeller.ViewModel;
 using BuyerSeller.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BuyerSeller.Controllers
 {
+
     public class ServiceController : Controller
     {
         private readonly ApplicationDbContext dbContext;
@@ -29,6 +31,7 @@ namespace BuyerSeller.Controllers
             return View(sellerServices);
         }
 
+        [Authorize(Roles = "Seller")]
         public IActionResult CreateService()
         {
             return View();
@@ -71,6 +74,25 @@ namespace BuyerSeller.Controllers
                 }
             }
             return uniqueFileName;
+        }
+      
+        [Authorize(Roles = "Buyer")]
+        [HttpGet]
+        public IActionResult Detail(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var services =  dbContext.Services.FirstOrDefault(x => x.Id == id); 
+            if (services == null)
+            {
+                return NotFound();
+            }
+
+            return View(services);
+
         }
     }
 

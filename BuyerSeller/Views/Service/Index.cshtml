@@ -1,40 +1,135 @@
-﻿@model IEnumerable<BuyerSeller.Models.Service>
+﻿@using Microsoft.AspNetCore.Identity;
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager
+@inject SignInManager<ApplicationUser> signInManager;
+@model IEnumerable<BuyerSeller.Models.Service>
 
 @{
     ViewData["Title"] = "Index";
 }
- 
-<h4 class="text-center text-uppercase">List of Services</h4>
 
-<p>
-    <a asp-action="CreateService" class="btn btn-sm btn-primary rounded-0 text-uppercase"><i class="fas fa-plus-circle"></i> Add New</a>
-</p>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Picture)</th>
-            <th>@Html.DisplayNameFor(model => model.Title)</th>
-            <th>@Html.DisplayNameFor(model => model.Description)</th>
-            <th>@Html.DisplayNameFor(model => model.tags)</th>
+<link rel="stylesheet" href="~/assets/css/main.css" />
 
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var employee in Model)
-        {
-            <tr>
-               <td><img src="~/Pictures/@employee.Picture"
-     class="rounded-circle"
-     height="50" width="50"
-     asp-append-version="true" /></td>
-                <td>
-                    
-                    @employee.Title
-                </td>
-                <td>@employee.Description</td>
-                <td>@employee.tags</td> 
-            </tr>
 
-        }
-    </tbody>
-</table>   
+
+<body class="is-preload">
+
+
+    @if (signInManager.IsSignedIn(User) && User.IsInRole("Buyer"))
+    {
+        <div id="wrapper">
+
+            <!-- Main -->
+            <section id="main">
+
+                <!-- Items -->
+                <div class="items">
+
+                    <div class="item intro span-2">
+                        <h1>Services provided By Seller</h1>
+                        <p>
+                            These Listed Services are <br />
+                            Provided By Seller.
+                        </p>
+                    </div>
+                    @foreach (var employee in Model)
+                    { 
+                <article class="item thumb span-1">
+                    <h2>@employee.Title</h2>
+                    <a asp-action="Detail" asp-route-id="@employee.Id" ><img src="~/Pictures/@employee.Picture" alt=""></a>
+                </article>
+
+            }
+                </div>
+
+                <!-- Items -->
+
+
+            </section>
+            </div> 
+            }
+            else
+            {
+            <!-- Wrapper -->
+            <div id="wrapper">
+
+                <!-- Main -->
+                <section id="main">
+
+                    <!-- Items -->
+                    <div class="items">
+
+                        <div class="item intro span-2">
+                            <h1>Parallelism</h1>
+                            <p>
+                                A responsive portfolio site<br />
+                                template by HTML5 UP
+                            </p>
+                        </div>
+
+                        <article class="item thumb span-1">
+                            <h2>You really got me</h2>
+                            <a href="~/images/fulls/01.jpg" class="image"><img src="~/images/thumbs/01.jpg" alt=""></a>
+                        </article>
+
+                        <article class="item thumb span-2">
+                            <h2>Ad Infinitum</h2>
+                            <a href="~/images/fulls/02.jpg" class="image"><img src="~/images/thumbs/02.jpg" alt=""></a>
+                        </article>
+
+                        <article class="item thumb span-1">
+                            <h2>Different.</h2>
+                            <a href="~/images/fulls/03.jpg" class="image"><img src="~/images/thumbs/03.jpg" alt=""></a>
+                        </article>
+
+                        <article class="item thumb span-1">
+                            <h2>Elysium</h2>
+                            <a href="~/images/fulls/04.jpg" class="image"><img src="~/images/thumbs/04.jpg" alt=""></a>
+                        </article>
+
+                        <article class="item thumb span-3">
+                            <h2>Kingdom of the Wind</h2>
+                            <a href="~/images/fulls/05.jpg" class="image"><img src="~/images/thumbs/05.jpg" alt=""></a>
+                        </article>
+
+                        <article class="item thumb span-1">
+                            <h2>The Pursuit</h2>
+                            <a href="~/images/fulls/06.jpg" class="image"><img src="~/images/thumbs/06.jpg" alt=""></a>
+                        </article>
+
+                        <article class="item thumb span-2">
+                            <h2>Boundless</h2>
+                            <a href="~/images/fulls/07.jpg" class="image"><img src="~/images/thumbs/07.jpg" alt=""></a>
+                        </article>
+
+                        <article class="item thumb span-2">
+                            <h2>The Spectators</h2>
+                            <a href="~/images/fulls/08.jpg" class="image"><img src="~/images/thumbs/08.jpg" alt=""></a>
+                        </article>
+
+                    </div>
+
+                    <!-- Items -->
+                    <div class="items">
+
+                        <article class="item thumb span-3"><h2>Kingdom of the Wind</h2><a href="~/images/fulls/05.jpg" class="image"><img src="~/images/thumbs/05.jpg" alt=""></a></article>
+                        <article class="item thumb span-1"><h2>The Pursuit</h2><a href="~/images/fulls/06.jpg" class="image"><img src="~/images/thumbs/06.jpg" alt=""></a></article>
+                        <article class="item thumb span-2"><h2>Boundless</h2><a href="~/images/fulls/07.jpg" class="image"><img src="~/images/thumbs/07.jpg" alt=""></a></article>
+                        <article class="item thumb span-2"><h2>The Spectators</h2><a href="~/images/fulls/08.jpg" class="image"><img src="~/images/thumbs/08.jpg" alt=""></a></article>
+                        <article class="item thumb span-1"><h2>You really got me</h2><a href="~/images/fulls/01.jpg" class="image"><img src="~/images/thumbs/01.jpg" alt=""></a></article>
+                        <article class="item thumb span-2"><h2>Ad Infinitum</h2><a href="~/images/fulls/02.jpg" class="image"><img src="~/images/thumbs/02.jpg" alt=""></a></article>
+                        <article class="item thumb span-1"><h2>Different.</h2><a href="~/images/fulls/03.jpg" class="image"><img src="~/images/thumbs/03.jpg" alt=""></a></article>
+                        <article class="item thumb span-2"><h2>Kingdom of the Wind</h2><a href="~/images/fulls/05.jpg" class="image"><img src="~/images/thumbs/05.jpg" alt=""></a></article>
+                        <article class="item thumb span-1"><h2>Elysium</h2><a href="~/images/fulls/04.jpg" class="image"><img src="~/images/thumbs/04.jpg" alt=""></a></article>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            }
+
+
+        
+    </body>
